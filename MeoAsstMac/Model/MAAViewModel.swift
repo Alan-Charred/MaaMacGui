@@ -328,13 +328,13 @@ extension MAAViewModel {
             try await reloadResources(channel: channel)
             logTrace(
                 """
-                外部资源版本：\(currentResourceVersion.activity.name)
+                外部资源版本：\(currentResourceVersion.title)
                 更新时间：\(currentResourceVersion.last_updated)
                 """)
         } else {
             logTrace(
                 """
-                内置资源版本：\(currentResourceVersion.activity.name)
+                内置资源版本：\(currentResourceVersion.title)
                 更新时间：\(currentResourceVersion.last_updated)
                 """)
             let url = documentsDirectory.appendingPathComponent("resource", isDirectory: true)
@@ -372,7 +372,7 @@ extension MAAViewModel {
 
     private func updateChannel(channel: MAAClientChannel) {
         for (index, task) in tasks.enumerated() {
-            guard case var .startup(config) = task.task else {
+            guard case .startup(var config) = task.task else {
                 continue
             }
 
@@ -426,7 +426,7 @@ extension MAAViewModel {
 
         var firstStart = true
         for (index, task) in tasks.enumerated() {
-            guard case var .startup(config) = task.task else {
+            guard case .startup(var config) = task.task else {
                 continue
             }
 
@@ -442,7 +442,7 @@ extension MAAViewModel {
         }
 
         for (index, task) in tasks.enumerated() {
-            guard case var .closedown(config) = task.task else {
+            guard case .closedown(var config) = task.task else {
                 continue
             }
 
